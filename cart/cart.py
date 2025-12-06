@@ -30,10 +30,10 @@ class Cart():
         product_quantity = qty
         if product_id in self.cart:
             self.cart[product_id]['qty'] = product_quantity
-            
+
         self.session.modified = True
 
-    def __len__(self)
+    def __len__(self):
         return sum(item['qty'] for item in self.cart.values())
 
     def __iter__(self):
