@@ -88,11 +88,11 @@
                         
                         </li>
                         
-                        {% for category in all_categories %}
+                        {% for brand in all_brands %}
                         
                             <li>
 
-                                <a class="dropdown-item" href="{{category.get_absolute_url}}"> {{ category.name | capfirst }} </a>
+                                <a class="dropdown-item" href="{% url 'list-brand' brand|slugify %}"> {{ brand | capfirst }} </a>
 
                             </li>
 
