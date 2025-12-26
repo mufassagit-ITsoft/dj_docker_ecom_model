@@ -8,7 +8,7 @@ WORKDIR /app
 
 RUN pip install poetry
 
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml poetry.lock requirements.txt ./
 
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
