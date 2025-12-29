@@ -1,4 +1,90 @@
-<nav class="navbar navbar-expand-lg bg-primary justify-content-center">
+{% load static %}
+
+<nav class="py-2 border-bottom" style="background-color: #000000;">
+    <div class="container d-flex flex-wrap align-items-center">
+        
+        <!-- Logo/Brand -->
+        <a href="" class="d-flex align-items-center text-decoration-none me-4">
+            <img src="{% static 'media/misc/game_logo_mock.png' %}" alt="Gamestore Logo" width="50" height="45" style="margin-right: 2px;">
+            <span class="fs-5 text-white fw-bold">Gamestore</span>
+        </a>
+        
+        <!-- Center Navigation Links -->
+        <ul class="nav me-auto">
+            <li class="nav-item">
+                <a href="{% url 'store' %}" class="nav-link text-white px-2">
+                    <i class="fa fa-home" aria-hidden="true"></i> Home
+                </a>
+            </li>
+            
+            <!-- Video Games Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white px-2" href="#" id="navbarDropdown" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Video Games
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <a class="dropdown-item" href="{% url 'store' %}">All</a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    {% for brand in all_brands %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'list-brand' brand|slugify %}">{{ brand|capfirst }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+        
+        <!-- Search Bar -->
+        <div class="search-container me-3" style="position: relative;">
+            <form class="d-flex" role="search" method="GET" action="{% url 'search-products' %}" id="search-form">
+                <div class="input-group" style="width: 250px;">
+                    <input class="form-control" type="search" name="q" id="search-input" 
+                           placeholder="Search..." aria-label="Search" 
+                           value="{{ query }}" autocomplete="off">
+                    <button class="btn btn-outline-light" type="submit">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </form>
+            <div id="search-suggestions" class="search-suggestions position-absolute bg-white border rounded shadow-sm mt-1" 
+                 style="display: none; width: 100%; z-index: 1000;"></div>
+        </div>
+        
+        <!-- Shopping Cart -->
+        <a href="{% url 'cart-summary' %}" class="btn btn-outline-light position-relative me-2">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-qty">
+                {% with qty_amount=cart|length %}
+                    {% if qty_amount > 0 %}
+                        {{ qty_amount }}
+                    {% else %}
+                        0
+                    {% endif %}
+                {% endwith %}
+            </span>
+        </a>
+        
+        <!-- Right Side - Auth Buttons -->
+        <div class="text-end">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-light me-2">
+                    <i class="fa fa-home" aria-hidden="true"></i> Dashboard
+                </a>
+                <a href="{% url 'user-logout' %}" class="btn btn-light">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                </a>
+            {% else %}
+                <a href="{% url 'my-login' %}" class="btn btn-outline-light me-2">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-light">Register</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<!--nav class="navbar navbar-expand-lg bg-primary justify-content-center">
 
 
         <a class="navbar-brand main-heading text-white" href="{% url 'store' %}"> 
@@ -19,7 +105,7 @@
 
         <span class="navbar-toggler-icon"></span>
 
-    </button>
+        </button>
 
     
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -159,7 +245,7 @@
 
         
         </div>
-            <!-- Search Bar  -->
+            <search bar>
             <form class="d-flex" role="search" method="GET" action="{% url 'search-products' %}" id="search-form">
                     <div class="input-group">
                         <input class="form-control" type="search" name="q" id="search-input" placeholder="Search products..." aria-label="Search" value="{{ query }}" autocomplete="off">
@@ -172,4 +258,4 @@
             </div>
 
 
-    </nav>
+    </nav-->
