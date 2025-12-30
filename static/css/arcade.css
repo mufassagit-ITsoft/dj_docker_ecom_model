@@ -7,7 +7,7 @@
 }
             
 /* Headers get retro styling */
-h1, h2, h3, .album, .fs-5 {
+h1, h2, h3, h4, .album, .fs-5, p, .dash {
     font-family: 'Press Start 2P', cursive;
     line-height: 1.6;
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
