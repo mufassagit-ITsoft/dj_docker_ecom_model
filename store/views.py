@@ -28,15 +28,10 @@ def list_category(request, category_slug=None):
     return render(request, 'store/list-category.html', {'category':category, 'products':products})
 
 def list_brand(request, brand_name=None):
-    """Display all products from a specific brand"""
-    # Decode URL-encoded brand name and get products
     brand_name = brand_name.replace('-', ' ')
     products = Product.objects.filter(brand__iexact=brand_name)
-    
     if not products.exists():
-        # If no products found, try to find closest match
         products = Product.objects.filter(brand__icontains=brand_name)
-    
     context = {
         'brand': brand_name,
         'products': products,
@@ -53,19 +48,16 @@ def search_products(request):
     query = request.GET.get('q', '')
     is_ajax = request.GET.get('ajax', '') == '1'
     if query:
-        # Search in product title, brand, and description
         products = Product.objects.filter(
             Q(title__icontains=query) | 
             Q(brand__icontains=query) | 
             Q(description__icontains=query)
-        ).distinct()[:10]  # Limit to 10 results for AJAX
+        ).distinct()[:10]  
     else:
         products = Product.objects.none()
-    # If this is an AJAX request, return HTML snippet for suggestions
     if is_ajax:
         html = render_to_string('store/search-suggestions.html', {'products': products, 'query': query})
         return HttpResponse(html)
-    # Otherwise, return full page
     context = {
         'products': products,
         'query': query,
