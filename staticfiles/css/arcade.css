@@ -1,0 +1,105 @@
+.gamestore-brand,
+.navbar-brand,
+.main-heading {
+    font-family: 'Press Start 2P', cursive !important;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
+}
+            
+/* Headers get retro styling */
+h1, h2, h3, h4, .album, .fs-5, p, .dash {
+    font-family: 'Press Start 2P', cursive;
+    line-height: 1.6;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+            
+h1 {
+    font-size: 1.5rem;
+}
+            
+h2 {
+    font-size: 1.2rem;
+}
+            
+h3 {
+    font-size: 1rem;
+}
+            
+/* Buttons get arcade style */
+.btn {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    padding: 12px 20px;
+    border: 3px solid;
+    text-transform: uppercase;
+    transition: all 0.1s;
+}
+            
+.btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+}
+            
+.btn:active {
+    transform: translate(0, 0);
+    box-shadow: none;
+}
+            
+/* Navigation links */
+.nav-link {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+}
+            
+/* Dropdown items stay readable */
+.dropdown-item {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.65rem;
+    padding: 10px 15px;
+}
+            
+/* Alert messages */
+.alert {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    border: 3px solid;
+    line-height: 1.8;
+}
+            
+/* Cart badge */
+.badge {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6rem;
+}
+            
+/* Search placeholder and input */
+.form-control {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.65rem;
+}
+            
+.form-control::placeholder {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.65rem;
+}
+            
+/* Price tags and product info */
+.price,
+.product-title {
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+            
+/* Body text stays readable but gets slight retro feel */
+body {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+            
+/* Smooth font rendering for pixel font */
+* {
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+}
