@@ -179,8 +179,7 @@ def track_orders(request):
         traceback.print_exc()
         return render(request, 'account/track-orders.html', {'orders': []})
     
-    
-    
+
 @login_required(login_url='my-login')
 def rewards_history(request):
     reward_account, created = RewardAccount.objects.get_or_create(user=request.user)
