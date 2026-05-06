@@ -56,6 +56,18 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=4, decimal_places=2)
     image = models.ImageField(upload_to='images/')
 
+    # ── UPC Barcode Field ───────────────────────────────────────────────
+    # Stores the Universal Product Code for barcode scanning.
+    # Used for admin scanning, quick product lookup, and storefront search.
+    upc_code = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        unique=True,
+        db_index=True,
+        help_text="Universal Product Code (UPC/EAN barcode number)"
+    )
+
     '''
     The variable image can be done in one of two ways.
     One is by the way of the admin page, as it is done on this
@@ -100,4 +112,3 @@ class Product(models.Model):
             self.save()
             return True
         return False
-
