@@ -108,6 +108,10 @@ DATABASES = {
     'backup': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'backup_db.sqlite3',  # backup database
+    },
+    'separate': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': Path('/home/mufassa/Documents/Compfiles/python/Django/gamestore_db/separate_db.sqlite3'),
     }
 }
 

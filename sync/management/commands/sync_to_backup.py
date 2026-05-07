@@ -5,7 +5,7 @@ from store.models import Topic, Category, Product
 from payment.models import ShippingAddress, Order, OrderItem, RefundRequest, RefundItem
 from account.models import RewardAccount, RewardTransaction
 
-BACKUP_DB = 'backup'
+SYNC_TARGETS = ['backup', 'separate']
 
 SYNC_MODELS = [
     ('Users',               User),
@@ -42,14 +42,15 @@ class Command(BaseCommand):
             self.stdout.write(f'  Syncing {label} ({count} records)...')
 
             for instance in queryset.iterator():
-                try:
-                    instance.save(using=BACKUP_DB)
-                    synced += 1
-                except Exception as e:
-                    errors += 1
-                    self.stderr.write(
-                        f'    ERROR syncing {label} pk={instance.pk}: {e}'
-                    )
+                for db in SYNC_TARGETS:
+                    try:
+                        instance.save(using=db)
+                        synced += 1
+                    except Exception as e:
+                        errors += 1
+                        self.stderr.write(
+                            f'    ERROR syncing {label} pk={instance.pk} to {db}: {e}'
+                        )
 
             total_synced += synced
             total_errors += errors

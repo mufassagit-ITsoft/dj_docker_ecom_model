@@ -23,8 +23,10 @@ from account.models import RewardAccount, RewardTransaction
 
 logger = logging.getLogger(__name__)
 
-BACKUP_DB = 'backup'
+SYNC_TARGETS = ['backup', 'separate']
 
+# Tracks which PKs are currently being synced to prevent recursion
+_syncing = set()
 
 # ─────────────────────────────────────────────
 # Core sync helpers
@@ -35,13 +37,19 @@ def mirror_save(instance):
     Save an instance to the backup database.
     Errors are logged but never crash the primary write.
     """
+    key = (instance.__class__.__name__, instance.pk)
+    if key in _syncing:
+        return   # already syncing this instance, stop recursion
+    _syncing.add(key)
     try:
-        instance.save(using=BACKUP_DB)
-    except Exception as e:
-        logger.error(
-            "[Backup Sync] Save failed for %s (pk=%s): %s",
-            instance.__class__.__name__, instance.pk, e
-        )
+        for db in SYNC_TARGETS:
+            try:
+                instance.save(using=db)
+            except Exception as e:
+                logger.error("[Sync] Save failed for %s (pk=%s) on %s: %s",
+                             instance.__class__.__name__, instance.pk, db, e)
+    finally:
+        _syncing.discard(key)
 
 
 def mirror_delete(instance):
@@ -49,13 +57,12 @@ def mirror_delete(instance):
     Delete an instance from the backup database by pk.
     Errors are logged but never crash the primary delete.
     """
-    try:
-        type(instance).objects.using(BACKUP_DB).filter(pk=instance.pk).delete()
-    except Exception as e:
-        logger.error(
-            "[Backup Sync] Delete failed for %s (pk=%s): %s",
-            instance.__class__.__name__, instance.pk, e
-        )
+    for db in SYNC_TARGETS:
+        try:
+            type(instance).objects.using(db).filter(pk=instance.pk).delete()
+        except Exception as e:
+            logger.error("[Sync] Delete failed for %s (pk=%s) on %s: %s",
+                         instance.__class__.__name__, instance.pk, db, e)
 
 
 # ─────────────────────────────────────────────
