@@ -1,3 +1,5 @@
+{% load static %}
+
 <style>
     /* Nested submenu styles */
     .dropdown-submenu {
@@ -30,9 +32,9 @@
 
 <nav class="navbar navbar-expand-lg bg-primary justify-content-center">
 
-    <a class="navbar-brand main-heading text-white" href="{% url 'store' %}">
+    <a class="navbar-brand main-heading text-white d-flex align-items-center" style="gap:8px;" href="{% url 'store' %}">
         <img src="{% static 'media/misc/evoGames_logo_icon.png' %}" alt="EvoGames" style="height:40px;width:auto;object-fit:contain;image-rendering:auto;">
-        &nbsp; &nbsp; Gamestore
+        Gamestore
     </a>
 
     <button
